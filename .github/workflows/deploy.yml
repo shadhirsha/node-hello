@@ -28,7 +28,7 @@ jobs:
 
       - name: Deploy to EC2
         run: |
-          ssh -o StrictHostKeyChecking=no ubuntu@EC2_PUBLIC_IP "
+          ssh -o StrictHostKeyChecking=no ubuntu@${{secrets.SSH_CLIENT_PUBLIC_IP}} "
             echo 'Pull image from docker hub'
             docker pull shadhirshaz/node-hello:latest
 
