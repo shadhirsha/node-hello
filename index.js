@@ -3,8 +3,7 @@ const port = process.env.PORT || 3000;
 
 const server = http.createServer((req, res) => {
   res.statusCode = 200;
-  const msg =
-    'Hello Node shadhir CI/CD working self hosted after update SSL with NGINX! check test.syncledge.com\n';
+  const msg = 'Hello Node shadhir CI/CD working EC2-SSH\n';
   res.end(msg);
 });
 

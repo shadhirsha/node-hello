@@ -19,11 +19,33 @@ jobs:
 
   deploy:
     needs: build
-    runs-on: [aws-ec2]
+    runs-on: ubuntu-latest # Use GitHub-hosted runner
     steps:
-      - name: Pull image from docker hub
-        run: docker pull shadhirshaz/node-hello:latest
-      - name: Delete old container
-        run: docker rm -f node-hello-container
-      - name: Run docker container
-        run: docker run -d -p 3000:3000 --name node-hello-container shadhirshaz/node-hello
+      - name: Set up SSH
+        uses: webfactory/ssh-agent@v0.8.1
+        with:
+          ssh-private-key: ${{ secrets.EC2_SSH_KEY }}
+
+      - name: Deploy to EC2
+        run: |
+          ssh -o StrictHostKeyChecking=no ubuntu@EC2_PUBLIC_IP "
+            echo 'Pull image from docker hub'
+            docker pull shadhirshaz/node-hello:latest
+
+            echo 'Delete old container'
+            docker rm -f node-hello-container || true
+
+            echo 'Run docker container'
+            docker run -d -p 3000:3000 --name node-hello-container shadhirshaz/node-hello
+
+            echo 'Waiting for container to start...'
+            sleep 5
+
+            echo 'Health check...'
+            if curl -f http://localhost:3000; then
+              echo 'Deployment successful!'
+            else
+              echo 'Deployment failed!'
+              exit 1
+            fi
+          "
