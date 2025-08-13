@@ -26,11 +26,16 @@ Great for testing simple deployments to the cloud
 4. shadhirshaz/node-hello -> [dockerhub-repo-name]
 5. 3000 -> [your-port]
 6. node-hello-container -> [your-branch]-container
-7. If Error msg Shows "permission denied while trying to connect to the Docker daemon socket at unix:///var/run/docker.sock: Get "http://%2Fvar%2Frun%2Fdocker.sock/v1.47/containers/json": dial unix /var/run/docker.sock: connect: permission denied" then go
-8. run sudo su
-9. chmod 777 /var/run/docker.sock
-10. retry failed job
-11. deploy.yml file we can add multiple ports to run docker image [-p 80:3000]
+7. deploy.yml file we can add multiple ports to run docker image [-p 80:3000]
+
+## Error log on DEPLOY
+
+1. "permission denied while trying to connect to the Docker daemon socket at unix:///var/run/docker.sock: Get "http://%2Fvar%2Frun%2Fdocker.sock/v1.47/containers/json": dial unix /var/run/docker.sock: connect: permission denied"
+   i. run sudo su
+   ii. chmod 777 /var/run/docker.sock
+   iii. retry failed job
+2. "permission denied while trying to connect to the Docker daemon socket at unix:///var/run/docker.sock: Post "http://%2Fvar%2Frun%2Fdocker.sock/v1.51/images/create?fromImage=docker.io%2Fshadhirshaz%2Fnode-hello&tag=latest": dial unix /var/run/docker.sock: connect: permission denied"
+   1. no solution
 
 ## SSL Certificate connect prograss with custom domain
 
