@@ -15,6 +15,8 @@ Great for testing simple deployments to the cloud
 5. on Run ./config.sh -> enter Runner group name = default, then runner name, also label same as name better, then \_work just press enter
 6. finally then run ./run.sh
 7. check the runner status (idle)
+8. Install docker -> "curl -fsSL https://get.docker.com -o get-docker.sh && sh get-docker.sh"
+9. run "docker -v" return docker version
 
 ## Docker Image Setup
 
@@ -28,3 +30,10 @@ Great for testing simple deployments to the cloud
 8. run sudo su
 9. chmod 777 /var/run/docker.sock
 10. retry failed job
+11. deploy.yml file we can add multiple ports to run docker image [-p 80:3000]
+
+## SSL Certificate connect prograss with custom domain
+
+1. create elastic ip and associate with current instance
+2. add DNS records in cloudflare(DNS managenemt), A Record, Proxy status should be "DNS Only"
+3.
