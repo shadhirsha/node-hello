@@ -3,7 +3,8 @@ const port = process.env.PORT || 3000;
 
 const server = http.createServer((req, res) => {
   res.statusCode = 200;
-  const msg = 'Hello Node shadhir CI/CD working EC2-SSH\n';
+  const msg =
+    'Hello Node shadhir CI/CD working EC2-SSH Removed Action Runner\n';
   res.end(msg);
 });
 
