@@ -35,7 +35,7 @@ jobs:
             fi
 
             echo 'Login to Doppler using DOPPLER_TOKEN'
-            doppler login --token ${{ secrets.DOPPLER_TOKEN_STG }}
+            doppler login --token ${{ secrets.DOPPLER_TOKEN }}
             echo 'Pull image from docker hub'
             docker pull shadhirshaz/node-hello:latest
 
