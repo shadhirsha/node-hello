@@ -27,6 +27,8 @@ jobs:
           ssh-private-key: ${{ secrets.EC2_SSH_KEY }}
 
       - name: Deploy to EC2
+        env:
+          DOPPLER_TOKEN: ${{ secrets.DOPPLER_TOKEN }}
         run: |
           ssh -o StrictHostKeyChecking=no ubuntu@${{secrets.SSH_CLIENT_PUBLIC_IP}} "
             echo 'Install Doppler CLI if not installed'
@@ -34,8 +36,6 @@ jobs:
               curl -Ls https://cli.doppler.com/install.sh | sudo sh
             fi
 
-            echo 'Login to Doppler using DOPPLER_TOKEN'
-            doppler login --token ${{ secrets.DOPPLER_TOKEN }}
             echo 'Pull image from docker hub'
             docker pull shadhirshaz/node-hello:latest
 
@@ -43,7 +43,9 @@ jobs:
             docker rm -f node-hello-container || true
 
             echo 'Run docker container'
-            doppler run -- docker run -d -p 3000:3000 --name node-hello-container shadhirshaz/node-hello
+            DOPPLER_TOKEN=$DOPPLER_TOKEN doppler run \
+            -- docker run -d -p 3000:3000 \
+            --name node-hello-container shadhirshaz/node-hello
 
             echo 'Waiting for container to start...'
             sleep 5
