@@ -27,9 +27,9 @@ jobs:
           ssh-private-key: ${{ secrets.EC2_SSH_KEY }}
 
       - name: Deploy to EC2
-      env:
-        DOPPLER_TOKEN: ${{ secrets.DOPPLER_TOKEN }}
-        IMAGE_TAG: latest
+        env:
+          DOPPLER_TOKEN: ${{ secrets.DOPPLER_TOKEN }}
+          IMAGE_TAG: latest
         run: |
           ssh -o StrictHostKeyChecking=no ubuntu@${{secrets.SSH_CLIENT_PUBLIC_IP}} "
             echo 'Pull image from docker hub'
