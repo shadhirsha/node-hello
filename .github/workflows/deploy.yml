@@ -27,16 +27,19 @@ jobs:
           ssh-private-key: ${{ secrets.EC2_SSH_KEY }}
 
       - name: Deploy to EC2
+      env:
+        DOPPLER_TOKEN: ${{ secrets.DOPPLER_TOKEN }}
+        IMAGE_TAG: latest
         run: |
           ssh -o StrictHostKeyChecking=no ubuntu@${{secrets.SSH_CLIENT_PUBLIC_IP}} "
             echo 'Pull image from docker hub'
-            docker pull shadhirshaz/node-hello:latest
+            docker pull shadhirshaz/node-hello:${IMAGE_TAG}
 
             echo 'Delete old container'
             docker rm -f node-hello-container || true
 
             echo 'Run docker container'
-            docker run -d -p 3000:3000 --name node-hello-container shadhirshaz/node-hello
+              docker run -d --name node-hello-container -p 3000:3000 -e DOPPLER_TOKEN='${DOPPLER_TOKEN}' shadhirshaz/node-hello:${IMAGE_TAG}
 
             echo 'Waiting for container to start...'
             sleep 5
